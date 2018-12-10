@@ -8,3 +8,13 @@ h1 {
 button {
     margin-top: 20px;
 }
+
+body {
+    background-image: url("images/Football-Field.jpeg");
+    color:white;
+}
+
+.displayedButtons {
+    margin-left: 3px;
+    margin-right: 3px;
+}
