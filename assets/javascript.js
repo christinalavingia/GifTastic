@@ -8,7 +8,7 @@ function displayArrayButtons() {
     $("#team-buttons").empty();
     for (var j = 0; j < teamsArray.length; j++) {
         var button = $("<button>");
-        button.addClass("displayedButtons btn btn-default");
+        button.addClass("displayedButtons btn btn-light");
         button.attr("data-team", teamsArray[j]);
         button.text(teamsArray[j]);
         $("#team-buttons").append(button);
@@ -20,14 +20,13 @@ $("#add-team").on("click", function(event) {
     event.preventDefault();
     var input = ("#teams-input").val().trim();
     teamsArray.push(input);
-    $("#teams-input").val();
-
+    console.log(input);
 });
 
 displayArrayButtons();
 
 //Fetches gifs from the Giphy API
-    var teamName = $(this).attr("data-name");
+    var teamName = $(this).attr("data-team");
     limit = 10;
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&api_key=7aG4b9imj3YrYLlVf4dY2PQ8a4aLIrIt";
 
@@ -41,6 +40,7 @@ displayArrayButtons();
     $("#teamGifs").empty();
     for (var i = 0; i < 10; i++) {
         var displayDiv = $("<div>");
+        displayDiv.addClass("gif");
 
         var rating = gifData[i].rating;
         var displayRating = $("<p>").text("Rating: " + rating);
@@ -63,36 +63,14 @@ function changeImageState() {
     var state = $(this).attr("data-state");
 
     if (state == "still") {
-        $(this).attr("src", animate);
+        $(this).attr("src", "animate");
         $(this).attr("data-state", "animate");
     } else if (state == "animate") {
-        $(this).attr("src", still);
+        $(this).attr("src", "still");
         $(this).attr("data-state", "stll");
     }
 }
-// function addButtons() {
-//     // $("#team-buttons").empty();
-//     for (var t = 0; t < teamsArray.length; t++) {
-//         var newButton = $("<button>");
-//         newButton.attr("class", "btn btn-default");
-//         newButton.attr("id", "input");
-//         newButton.attr("data-name", teamsArray[t]);
-//         newButton.text(teamsArray[t]);
-//         $("#team-buttons").append(newButton);
-//     }
-// }
-
-
-
-// $("#add-team").on("click", function() {
-//     var input = $("#teams-input").val().trim();
-//     $("#teams-form").reset();
-//     displayButtons.push(input);
-
-//     addButtons();
-//     return false;
-// }),
     
-    $(document).on("click", ".displayedButtons", displayGifs),
+    $(document).on("click", ".displayedButtons", displayArrayButtons),
     $(document).on("click", ".gif", changeImageState);
 });
