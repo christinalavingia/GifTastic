@@ -7,14 +7,11 @@ h1 {
 
 button {
     margin-top: 20px;
+     margin-left: 3px;
+    margin-right: 3px;
 }
 
 body {
     background-image: url("images/Football-Field.jpeg");
     color:white;
-}
-
-.displayedButtons {
-    margin-left: 3px;
-    margin-right: 3px;
 }

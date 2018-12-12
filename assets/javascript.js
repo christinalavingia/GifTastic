@@ -7,70 +7,69 @@ var teamsArray = ["Kansas City Chiefs", "Los Angeles Rams", "Minnesota Vikings",
 function displayArrayButtons() {
     $("#team-buttons").empty();
     for (var j = 0; j < teamsArray.length; j++) {
-        var button = $("<button>");
-        button.addClass("displayedButtons btn btn-light");
-        button.attr("data-team", teamsArray[j]);
-        button.text(teamsArray[j]);
-        $("#team-buttons").append(button);
+        $("#team-buttons").append("<button class='btn btn-light' data-team='" + teamsArray[j] + "'>" + teamsArray[j] + "</button>");
     }
 }
 
-//Sets new button from user input
-$("#add-team").on("click", function(event) {
-    event.preventDefault();
-    var input = ("#teams-input").val().trim();
-    teamsArray.push(input);
-    console.log(input);
-});
-
 displayArrayButtons();
 
+//Sets new button from user input
+$("#add-team").on("click", function() {
+    event.preventDefault();
+    var teamName = $("#teams-input").val().trim();
+    teamsArray.push(teamName);
+    displayArrayButtons();
+
+});
+
+
 //Fetches gifs from the Giphy API
+$("button").on("click", function() {
     var teamName = $(this).attr("data-team");
-    limit = 10;
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + input + "&api_key=7aG4b9imj3YrYLlVf4dY2PQ8a4aLIrIt";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + teamName + "&api_key=7aG4b9imj3YrYLlVf4dY2PQ8a4aLIrIt";
 
     $.ajax({
         url: queryURL,
         method: "GET"
     }).done(function(response) {
-        var gifData = response.data;
+        var results = response.data;
 
 //Displays gifs pulled from Giphy API
     $("#teamGifs").empty();
     for (var i = 0; i < 10; i++) {
-        var displayDiv = $("<div>");
-        displayDiv.addClass("gif");
-
-        var rating = gifData[i].rating;
+        var teamDiv = $("<div>");
+        var rating = results[i].rating;
         var displayRating = $("<p>").text("Rating: " + rating);
-        displayDiv.append(displayRating);
-        $("#teamGifs").append(displayDiv);
-
+        $("#teamGifs").append(teamDiv);
         var image = $("<img>");
-        image.attr("src", gifData[i].images.fixed_height_still.url);
-        image.attr("data-still", gifData[i].images.fixed_height_still.url);
-        image.attr("data-animate", gifData[i].images.fixed_height.url);
-        image.attr("data-state", "still");
-        displayDiv.append(image);
-        $("#teamGifs").append(displayDiv);
 
-    }
+        image.attr("src", results[i].images.original_still.url);
+        image.attr("data-still", results[i].images.original_still.url);
+        image.attr("data-animate", results[i].images.original.url);
+        image.attr("data-state", "still");
+        image.attr("class", "gif");
+        teamDiv.append(image);
+        teamDiv.append(displayRating);
+        $("#teamGifs").append(teamDiv);
+
+        }
+    });
 });
 
 //Alters image state on click
 function changeImageState() {
     var state = $(this).attr("data-state");
+    var animateState = $(this).attr("data-animate");
+    var stillState = $(this).attr("data-still");
 
     if (state == "still") {
-        $(this).attr("src", "animate");
+        $(this).attr("src", animateState);
         $(this).attr("data-state", "animate");
     } else if (state == "animate") {
-        $(this).attr("src", "still");
+        $(this).attr("src", stillState);
         $(this).attr("data-state", "stll");
     }
 }
     
-    $(document).on("click", ".displayedButtons", displayArrayButtons),
     $(document).on("click", ".gif", changeImageState);
 });
