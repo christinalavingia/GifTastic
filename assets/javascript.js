@@ -43,9 +43,9 @@ $("button").on("click", function() {
         $("#teamGifs").append(teamDiv);
         var image = $("<img>");
 
-        image.attr("src", results[i].images.original_still.url);
-        image.attr("data-still", results[i].images.original_still.url);
-        image.attr("data-animate", results[i].images.original.url);
+        image.attr("src", results[i].images.fixed_height_still.url);
+        image.attr("data-still", results[i].images.fixed_height_still.url);
+        image.attr("data-animate", results[i].images.fixed_height.url);
         image.attr("data-state", "still");
         image.attr("class", "gif");
         teamDiv.append(image);
