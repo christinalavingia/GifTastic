@@ -15,3 +15,8 @@ body {
     background-image: url("images/Football-Field.jpeg");
     color:white;
 }
+
+.gifStyle {
+    float: left;
+    margin: 0px 5px;
+}

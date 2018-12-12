@@ -7,7 +7,7 @@ var teamsArray = ["Kansas City Chiefs", "Los Angeles Rams", "Minnesota Vikings",
 function displayArrayButtons() {
     $("#team-buttons").empty();
     for (var j = 0; j < teamsArray.length; j++) {
-        $("#team-buttons").append("<button class='btn btn-light' data-team='" + teamsArray[j] + "'>" + teamsArray[j] + "</button>");
+        $("#team-buttons").append("<button class='btn btn-light teamSearch' data-team='" + teamsArray[j] + "'>" + teamsArray[j] + "</button>");
     }
 }
 
@@ -18,13 +18,14 @@ $("#add-team").on("click", function() {
     event.preventDefault();
     var teamName = $("#teams-input").val().trim();
     teamsArray.push(teamName);
-    displayArrayButtons();
+
+displayArrayButtons();
 
 });
 
 
 //Fetches gifs from the Giphy API
-$("button").on("click", function() {
+$(document).on("click", ".teamSearch", function() {
     var teamName = $(this).attr("data-team");
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + teamName + "&api_key=7aG4b9imj3YrYLlVf4dY2PQ8a4aLIrIt";
 
@@ -38,6 +39,7 @@ $("button").on("click", function() {
     $("#teamGifs").empty();
     for (var i = 0; i < 10; i++) {
         var teamDiv = $("<div>");
+        teamDiv.attr("class","gifStyle");
         var rating = results[i].rating;
         var displayRating = $("<p>").text("Rating: " + rating);
         $("#teamGifs").append(teamDiv);
